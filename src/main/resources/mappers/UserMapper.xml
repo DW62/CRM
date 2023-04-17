@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxxx.crm.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.xxxx.crm.vo.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="is_valid" property="isValid" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, user_pwd, true_name, email, phone, is_valid, create_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xxxx.crm.vo.User" >
+    insert into t_user (id, user_name, user_pwd, 
+      true_name, email, phone, 
+      is_valid, create_date, update_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
+      #{trueName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{isValid,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <!--
+     添加操作
+        默认返回的饿是受影响的行数，可以设置返回主键（自动增长）
+        useGeneratedKeys:取值范围是true或false，表示会获取主键，并赋值到keyProperty属性设置的模型属性（JavaBean实体类中的属性字段）
+        keyProperty:设置返回值将赋值给数据属性的哪个属性字段
+        keyColumn:设置数据库自动生动的朱主键名
+
+        返回的主键会自动设置到实体类中对应的id属性字段中
+  -->
+  <insert id="insertSelective" parameterType="com.xxxx.crm.vo.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+      <if test="trueName != null" >
+        true_name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null" >
+        #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxxx.crm.vo.User" >
+    update t_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null" >
+        true_name = #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxxx.crm.vo.User" >
+    update t_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR},
+      true_name = #{trueName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- 通过用户名查询用户记录，返回用户对象 -->
+  <select id="queryUserByName" parameterType="string" resultType="com.xxxx.crm.vo.User">
+    select
+        <include refid="Base_Column_List"/>
+    from
+        t_user
+    where
+        user_name = #{userName}
+  </select>
+
+  <!-- 查询所有的销售人员 -->
+  <select id="queryAllSales" resultType="java.util.Map">
+    SELECT
+	    u.id,u.user_name uname
+    from
+        t_user u
+    left join
+        t_user_role ur
+    on
+      u.id = ur.user_id
+    left join
+        t_role r
+    on
+        r.id = ur.role_id
+    where
+     u.is_valid = 1
+    and
+     r.is_valid = 1
+    and
+     r.role_name = '销售'
+  </select>
+
+  <!-- 多条件查询 -->
+  <select id="selectByParams" parameterType="com.xxxx.crm.query.UserQuery" resultType="com.xxxx.crm.vo.User">
+    select
+        <include refid="Base_Column_List"></include>
+    from
+        t_user
+    <where>
+      is_valid = 1
+      <!-- 用户名查询 -->
+      <if test="null != userName and userName != ''">
+        and user_name like concat('%',#{userName},'%')
+      </if>
+      <!-- 邮箱查询 -->
+      <if test="null != email and email != ''">
+        and email like concat('%',#{email},'%')
+      </if>
+      <!-- 手机号查询 -->
+      <if test="null != phone and phone != ''">
+        and phone like concat('%',#{phone},'%')
+      </if>
+    </where>
+  </select>
+
+
+  <!-- 删除用户 -->
+  <update id="deleteBatch">
+    update
+        t_user
+    set
+        is_valid = 0
+    where
+        id
+    in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+  </update>
+
+
+  <!-- 查询所有的客户经理 -->
+  <select id="queryAllCustomerManagers" resultType="java.util.Map">
+     SELECT
+	    u.id,u.user_name uname
+      from
+          t_user u
+      left join
+          t_user_role ur
+      on
+        u.id = ur.user_id
+      left join
+          t_role r
+      on
+          r.id = ur.role_id
+      where
+       u.is_valid = 1
+      and
+       r.is_valid = 1
+      and
+       r.role_name = '客户经理'
+  </select>
+
+</mapper>
